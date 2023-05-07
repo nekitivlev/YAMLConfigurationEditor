@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -59,8 +60,8 @@ public class ConfigEditor extends JFrame {
     // Create key and value input fields and add button
     JPanel inputPanel = new JPanel();
     inputPanel.setLayout(new GridLayout(1, 3));
-    keyField = new JTextField();
-    valueField = new JTextField();
+    keyField = new JTextField("Key (must be not-empty)");
+    valueField = new JTextField("Value");
     inputPanel.add(keyField);
     inputPanel.add(valueField);
     JButton addButton = new JButton("Add");
@@ -134,6 +135,9 @@ public class ConfigEditor extends JFrame {
    */
   private void addConfigKey() {
     String keyPath = keyField.getText();
+    if(keyPath.isEmpty()) {
+      return;
+    }
     ArrayList<String> keys = new ArrayList<>(List.of(keyPath.split("\\.")));
     Map<String, Object> node = config;
     for (int i = 0; i < keys.size() - 1; i++) {
